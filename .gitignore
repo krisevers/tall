@@ -1,0 +1,42 @@
+# Compiled object files
+*.o
+*.obj
+
+# Compiled binary files
+*.exe
+*.out
+*.app
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.so
+*.dll
+*.dylib
+
+# Debug files
+*.dSYM/
+*.stackdump
+
+# Build directories
+/build/
+/bin/
+/Debug/
+/Release/
+
+# IDE files
+*.vcxproj*
+*.sln
+*.idea/
+*.vscode/
+*.codelite/
+*.project
+*.settings/
+
+# Others
+*.log
+*.tmp
