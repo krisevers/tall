@@ -18,7 +18,7 @@ namespace tall
 
         using logging_config_t = std::unordered_map<std::string, std::string>;
 
-        class Logger
+        class logger
         {
             public:
                 enum LogLevel
@@ -29,10 +29,10 @@ namespace tall
                     DEBUG
                 };
 
-                Logger() = delete;
-                Logger(const logging_config_t &config) {
+                logger() = delete;
+                logger(const logging_config_t &config) {
                 };
-                virtual ~Logger() {};
+                virtual ~logger() {};
                 virtual void log(const std::string& message, LogLevel level) {};
                 virtual void log(const std::string& message) {};
 
@@ -69,11 +69,11 @@ namespace tall
         };
 
         // logger that writes to the console
-        class OutLogger : public Logger
+        class outLogger : public logger
         {
             public:
-                OutLogger() = delete;
-                OutLogger(const logging_config_t &config) : Logger(config) {};
+                outLogger() = delete;
+                outLogger(const logging_config_t &config) : logger(config) {};
 
                 virtual void log(const std::string& message, const LogLevel level) 
                 {
@@ -95,11 +95,11 @@ namespace tall
         };
 
         // logger that writes to a file
-        class FileLogger : public Logger
+        class fileLogger : public logger
         {
             public:
-                FileLogger() = delete;
-                FileLogger(const logging_config_t &config) : Logger(config) 
+                fileLogger() = delete;
+                fileLogger(const logging_config_t &config) : logger(config) 
                 {
                     auto name = config.find("filename");
                     if (name == config.end())
@@ -177,17 +177,17 @@ namespace tall
                 }
         };
 
-        using logger_creator = Logger *(*)(const logging_config_t &);
-        class LoggerFactory
+        using logger_creator = logger *(*)(const logging_config_t &);
+        class loggerFactory
         {
             public:
-                LoggerFactory()
+                loggerFactory()
                 {
-                    creators.emplace("", [](const logging_config_t &config)->Logger* { return new Logger(config); });
-                    creators.emplace("out", [](const logging_config_t &config)->Logger* { return new OutLogger(config); });
-                    creators.emplace("file", [](const logging_config_t &config)->Logger* { return new FileLogger(config); });
+                    creators.emplace("", [](const logging_config_t &config)->logger* { return new logger(config); });
+                    creators.emplace("out", [](const logging_config_t &config)->logger* { return new outLogger(config); });
+                    creators.emplace("file", [](const logging_config_t &config)->logger* { return new fileLogger(config); });
                 }
-                Logger* produce(const logging_config_t &config)
+                logger* produce(const logging_config_t &config)
                 {
                     auto type = config.find("type");
                     if (type == config.end())
@@ -207,16 +207,16 @@ namespace tall
         };
 
         // statically get a factory
-        inline LoggerFactory &getLoggerFactory()
+        inline loggerFactory &getLoggerFactory()
         {
-            static LoggerFactory factory;
+            static loggerFactory factory;
             return factory;
         };
 
         // get a singleton
-        inline Logger &getLogger(const logging_config_t &config = { {"type", "out"} })
+        inline logger &getLogger(const logging_config_t &config = { {"type", "out"} })
         {
-            static std::unique_ptr<Logger> singleton(getLoggerFactory().produce(config));
+            static std::unique_ptr<logger> singleton(getLoggerFactory().produce(config));
             return *singleton;
         };
 
@@ -227,7 +227,7 @@ namespace tall
         };
 
         // statically log manually with level
-        inline void log(const std::string &message, Logger::LogLevel level)
+        inline void log(const std::string &message, logger::LogLevel level)
         {
             getLogger().log(message, level);
         };
@@ -240,22 +240,22 @@ namespace tall
 
         inline void INFO(const std::string &message)
         {
-            getLogger().log(message, Logger::INFO);
+            getLogger().log(message, logger::INFO);
         };
 
         inline void WARNING(const std::string &message)
         {
-            getLogger().log(message, Logger::WARNING);
+            getLogger().log(message, logger::WARNING);
         };
 
         inline void ERROR(const std::string &message)
         {
-            getLogger().log(message, Logger::ERROR);
+            getLogger().log(message, logger::ERROR);
         };
 
         inline void DEBUG(const std::string &message)
         {
-            getLogger().log(message, Logger::DEBUG);
+            getLogger().log(message, logger::DEBUG);
         };
     }
 }
