@@ -17,6 +17,11 @@
 
 namespace tall {
 
+    // definitions
+    RESULT give(registry& r, ID parent, ID child, int copies);
+    ID assemble(registry& r, std::initializer_list<ID> components, std::size_t copies=1);
+
+    // implementations
     RESULT give(registry& r, ID parent, ID child, int copies) {
         if (!r.has(parent)) {
             tall::log::ERROR("parent not initialized...\n");
@@ -54,7 +59,7 @@ namespace tall {
     // RESULT allocate(const registry r, model& m) {
     //     // the dense arrays are created
     //     for (std::size_t i; i<r.size; i++) {
-        
+
     //     }
     //     // the view graph is created
     //     // tall::view s = data.slice({1}, {3})
