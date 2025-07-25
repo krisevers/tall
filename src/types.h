@@ -2,6 +2,10 @@
 #define TYPES_H
 
 #include <atomic>
+#include <typeinfo>
+#include <typeindex>
+#include <complex>
+#include <variant>
 
 namespace tall {
 
@@ -15,6 +19,7 @@ namespace tall {
         VARIABLE,
         PARAMETER,
         COLLECTION,
+        SYSTEM,
     };
 
     struct ID {
@@ -40,6 +45,15 @@ namespace tall {
             friend struct registry; // the struct/class allowed to create IDs
 
     };
+
+
+
+    // using primitive = std::variant<
+    //     int*,
+    //     float*,
+    //     double*,
+    //     bool*
+    // >;
 
 }
 

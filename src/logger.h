@@ -21,7 +21,7 @@ namespace tall
         class logger
         {
             public:
-                enum LogLevel
+                enum logLevel
                 {
                     INFO,
                     WARNING,
@@ -33,7 +33,7 @@ namespace tall
                 logger(const logging_config_t &config) {
                 };
                 virtual ~logger() {};
-                virtual void log(const std::string& message, LogLevel level) {};
+                virtual void log(const std::string& message, logLevel level) {};
                 virtual void log(const std::string& message) {};
 
                 std::string getTimestamp()
@@ -46,7 +46,7 @@ namespace tall
                     return timestamp;
                 }
 
-                std::string levelToString(LogLevel level)
+                std::string levelToString(logLevel level)
                 {
                     switch (level)
                     {
@@ -62,7 +62,7 @@ namespace tall
                             return "UNKNOWN";
                     }
                 }
-            
+
             protected:
                 std::mutex lock;
 
@@ -75,7 +75,7 @@ namespace tall
                 outLogger() = delete;
                 outLogger(const logging_config_t &config) : logger(config) {};
 
-                virtual void log(const std::string& message, const LogLevel level) 
+                virtual void log(const std::string& message, const logLevel level)
                 {
                     std::string output;
                     output += levelToString(level);
@@ -99,7 +99,7 @@ namespace tall
         {
             public:
                 fileLogger() = delete;
-                fileLogger(const logging_config_t &config) : logger(config) 
+                fileLogger(const logging_config_t &config) : logger(config)
                 {
                     auto name = config.find("filename");
                     if (name == config.end())
@@ -130,7 +130,7 @@ namespace tall
 
                 };
 
-                virtual void log(const std::string& message, const LogLevel level)
+                virtual void log(const std::string& message, const logLevel level)
                 {
                     std::string output;
                     output += getTimestamp();
@@ -164,7 +164,7 @@ namespace tall
                     {
                         last_reopen = now;
                         try { file.close(); } catch (...) {}
-                        try { 
+                        try {
                             file.open(filename, std::ofstream::out | std::ios::app);
                             last_reopen = now;
                         }
@@ -227,7 +227,7 @@ namespace tall
         };
 
         // statically log manually with level
-        inline void log(const std::string &message, logger::LogLevel level)
+        inline void log(const std::string &message, logger::logLevel level)
         {
             getLogger().log(message, level);
         };
@@ -284,7 +284,7 @@ void work()
 
 int main()
 {
-   
+
     // tall::log::configure({{"type", "file"}, {"filename", "test"}});
 
     std::vector<std::shared_ptr<std::thread>> threads(std::thread::hardware_concurrency());

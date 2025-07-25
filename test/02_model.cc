@@ -7,9 +7,9 @@ int main(int argc, char** argv) {
     std::size_t capacity = 100;
     tall::registry r(capacity);
 
-    auto x = tall::var(r);
-    auto y = tall::var(r);
-    auto z = tall::var(r);
+    auto x = tall::real(r);
+    auto y = tall::real(r);
+    auto z = tall::real(r);
 
     auto particle = tall::assemble(r, {x, y, z});
     
@@ -20,11 +20,6 @@ int main(int argc, char** argv) {
 
 
 
-
-    tall::model m;
-    if (!allocate(r, m)) {
-        printf("Allocation failed!");
-    }
 
     // we want paged storage for large numbers of entities.
     // m[particle, x] << this kind of syntax should return all x's which belong to particle. 

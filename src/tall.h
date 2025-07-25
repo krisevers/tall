@@ -9,7 +9,7 @@
 
 #include "types.h"
 #include "registry.h"
-#include "model.h"
+// #include "model.h"
 #include "math.h"
 #include "utils.h"
 #include "logger.h"
@@ -51,17 +51,17 @@ namespace tall {
 
 
 
-    RESULT allocate(const registry r, model& m) {
-        // the dense arrays are created
-        for (std::size_t i; i<r.size; i++) {
+    // RESULT allocate(const registry r, model& m) {
+    //     // the dense arrays are created
+    //     for (std::size_t i; i<r.size; i++) {
         
-        }
-        // the view graph is created
-        // tall::view s = data.slice({1}, {3})
+    //     }
+    //     // the view graph is created
+    //     // tall::view s = data.slice({1}, {3})
 
 
-        return SUCCESS;
-    }
+    //     return SUCCESS;
+    // }
 }
 
 

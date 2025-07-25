@@ -5,7 +5,7 @@
 #include <cmath>
 #include <functional>
 
-#include "tall.h"
+#include "registry.h"
 #include "math.h"
 
 namespace tall {
