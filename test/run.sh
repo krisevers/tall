@@ -21,7 +21,7 @@ fi
 for src in $pattern; do
     [ -e "$src" ] || continue
     exe="$OBJ_DIR/${src%.cc}"
-    g++ --std=c++23 "$src" -o "$exe"
+    g++ --std=c++23 -g "$src" -o "$exe"
 done
 
 all_passed=true

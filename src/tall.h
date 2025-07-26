@@ -22,7 +22,7 @@ namespace tall {
     ID assemble(registry& r, std::initializer_list<ID> components, std::size_t copies=1);
 
     // implementations
-    RESULT give(registry& r, ID parent, ID child, int copies) {
+    inline RESULT give(registry& r, ID parent, ID child, int copies) {
         if (!r.has(parent)) {
             tall::log::ERROR("parent not initialized...\n");
             return FAILURE;
@@ -45,7 +45,7 @@ namespace tall {
         return SUCCESS;
     }
 
-    ID assemble(registry& r, std::initializer_list<ID> components, std::size_t copies=1) {
+    inline ID assemble(registry& r, std::initializer_list<ID> components, std::size_t copies) {
         ID p = r.add(COLLECTION);
         for (auto c : components) {
             give(r, p, c, copies);

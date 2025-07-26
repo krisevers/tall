@@ -1,12 +1,10 @@
-#include <iostream>
 #include <vector>
 #include <memory>
 #include <typeindex>
-#include <string>
 #include <initializer_list>
-#include <functional>
 
-#include "../src/tall.h"
+#include "../src/types.h"
+#include "../src/registry.h"
 
 // component:   holds information on the allocation and type.
 // registry:    handles the construction of the model.
@@ -46,7 +44,7 @@ namespace tall {
             : any(sizeof(T), size, typeid(T)) {}
     };
 
-    
+
     struct storage {
         std::vector<std::unique_ptr<void, void(*)(void*)>> ptrs;
 
@@ -55,9 +53,6 @@ namespace tall {
         storage(int capacity) {
             ptrs.reserve(capacity);
         }
-
-
-
     };
 
     struct primitive {
@@ -89,7 +84,7 @@ namespace tall {
     struct kernel {
         std::vector<primitive>  primitives;
         std::vector<ID>         components;
-    
+
 
         kernel(registry& r, std::initializer_list<primitive> p) {
             primitives.reserve(p.size());
@@ -104,6 +99,30 @@ namespace tall {
     };
 
 }
+
+// struct Var {
+//     tall::ID id;
+//     kernel* k; // pointer to kernel to record ops
+
+//     Var(tall::ID id, kernel* k) : id(id), k(k) {}
+
+//     // Overload +
+//     struct AddExpr {
+//         Var lhs, rhs;
+//         AddExpr(const Var& lhs, const Var& rhs) : lhs(lhs), rhs(rhs) {}
+//     };
+
+//     AddExpr operator+(const Var& other) const {
+//         return AddExpr(*this, other);
+//     }
+
+//     // Overload =
+//     Var& operator=(const AddExpr& expr) {
+//         k->primitives.push_back(primitive(expr.lhs.id, expr.rhs.id, id));
+//         return *this;
+//     }
+// };
+
 
 
 tall::registry r(10);
@@ -121,10 +140,6 @@ tall::kernel k(r,
     }
 );
 
-
-
-
-
 int main() {
 
 
@@ -139,7 +154,7 @@ int main() {
     // insight: call the functions 'primitives'
     // insight: call the data types 'primitives'
 
-    // insight: after initialization there is no need to get back the data as a result. 
+    // insight: after initialization there is no need to get back the data as a result.
     // data-manipulation can be performed by calling specific optimized functions on the data (e.g. view)
 
 
