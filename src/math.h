@@ -6,26 +6,29 @@
 #include "types.h"
 
 namespace tall {
+namespace math {
 
+    // @brief primitive operations
     enum OPS {
         ADD,
         SUB,
         MUL,
         DIV,
         EXP,
-        SQRT,
-        VAR,  // For leaf nodes
+        SQR,
+        POW,
+        VAR,  // for leaf nodes
     };
 
-    struct node { };
-
+    struct node {
+        virtual ~node() = default;
+    };
     using node_ptr = std::shared_ptr<node>;
 
     struct variable : public node {
         ID id;
 
         explicit variable(ID id) : id(id) {}
-
     };
 
     struct binary_op : public node {
@@ -92,14 +95,6 @@ namespace tall {
                 auto new_node = std::make_shared<binary_op>(root, other.root, DIV);
                 return expression(new_node);
             }
-            expression exp(const expression& other) const {
-                auto new_node = std::make_shared<unary_op>(root, other.root, EXP);
-                return expression(new_node);
-            }
-            expression sqrt(const expression& other) const {
-                auto new_node = std::make_shared<unary_op>(root, other.root, SQRT);
-                return expression(new_node);
-            }
             // unary operations
             expression operator-() const {
                 auto new_node = std::make_shared<unary_op>(root, SUB);
@@ -107,7 +102,21 @@ namespace tall {
             }
     };
 
-}
+    expression exp(const expression& other) {
+        auto new_node = std::make_shared<unary_op>(other.get_root(), EXP);
+        return expression(new_node);
+    }
+    expression sqrt(const expression& other) {
+        auto new_node = std::make_shared<unary_op>(other.get_root(), SQR);
+        return expression(new_node);
+    }
+    expression pow(const expression& base, const double exp) {
+        auto new_node = std::make_shared<unary_op>(base.get_root(), POW);
+        return expression(new_node);
+    }
+
+}   // namespace math
+}   // namespace tall
 
 #endif // MATH_H
 

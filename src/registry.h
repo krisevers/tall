@@ -32,9 +32,9 @@ namespace tall {
             return id < capacity && versions[id] != INACTIVE;
         }
 
-        expression var() {
+        math::expression var() {
             ID id = add(VARIABLE);
-            return expression(id);
+            return math::expression(id);
         }
 
     };
