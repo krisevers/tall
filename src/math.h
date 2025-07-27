@@ -25,6 +25,7 @@ namespace tall {
         ID id;
 
         explicit variable(ID id) : id(id) {}
+
     };
 
     struct binary_op : public node {
