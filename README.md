@@ -43,10 +43,11 @@ int main(int argc, char** argv) {
     auto mars_parts = m[mars, particle]     // access component data using fast random access
 
     // cach-friendly iterations
-    auto dx = sigma*(y-x);
-    auto dy = x*(rho-z)-y;
-    auto dz = x*y - beta*y;
-    tall::kernel lorenz({dx, dy, dz});
+    tall::kernel lorenz({
+        sigma*(y-x),
+        x*(rho-z)-y,
+        x*y - beta*y,
+    });
 
     return 0;
 }
