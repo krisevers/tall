@@ -12,22 +12,27 @@ int main(int argc, char** argv) {
     tall::registry r(capacity);     // initialize the registry
 
     // initialize primitives
-    auto x = tall::var(r);
-    auto y = tall::var(r);
-    auto z = tall::var(r);
-    auto s = tall::param(r);
-    auto r = tall::param(r);
-    auto b = tall::param(r);
+    auto x = r.var();
+    auto y = r.var();
+    auto z = r.var();
+    auto sigma = r.var();
+    auto beta  = r.var();
+    auto rho   = r.var();
+
+    auto dx = sigma*(y-x);
+    auto dy = x*(rho-z)-y;
+    auto dz = x*y - beta*y;
+    tall::kernel lorenz({dx, dy, dz});
 
     // assemble components from primitives
-    auto vars  = tall::assemble(r, {x, y, z});
-    auto pars = tall::assemble(r, {s, r, b});
+    auto vars  = r.assemble({x, y, z});
+    auto pars = r.assemble({s, r, b});
 
-    auto particle = tall::assemble(r, {vars, parameters})  // ...and keep building
-    
-    auto earth = tall::assemble(r, {particle}, 1000);           // ...and building
-    auto mars = tall::assemble(r, {particle}, 100);             // ...and building
-    auto solarsystem = tall::assemble(r, {earth, mars});        // ...and building
+    auto particle = r.assemble({vars, parameters})  // ...and keep building
+
+    auto earth = r.assemble({particle}, 1000);           // ...and building
+    auto mars = r.assemble({particle}, 100);             // ...and building
+    auto solarsystem = r.assemble({earth, mars});        // ...and building
 
     // allocate the data
     tall::model m;
@@ -35,15 +40,13 @@ int main(int argc, char** argv) {
         tall::log::DEBUG("Allocation failed!");
     }
 
-    auto parts = m[mars, particle]     // access component data using fast random access
+    auto mars_parts = m[mars, particle]     // access component data using fast random access
 
     // cach-friendly iterations
-    for (auto p : parts) {
-        p[x] = p[x] * (p[y] - p[x]);
-        p[y] = p[x] * (p[r] - p[z]) - p[y];
-        p[z] = p[x] * p[y] - p[b] * p[z];
-    }
-
+    auto dx = sigma*(y-x);
+    auto dy = x*(rho-z)-y;
+    auto dz = x*y - beta*y;
+    tall::kernel lorenz({dx, dy, dz});
 
     return 0;
 }
