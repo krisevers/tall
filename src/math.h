@@ -1,7 +1,9 @@
 #ifndef MATH_H
 #define MATH_H
 
+#include <initializer_list>
 #include <memory>
+#include <vector>
 
 #include "types.h"
 
@@ -115,6 +117,13 @@ namespace math {
         return expression(new_node);
     }
 
+    // @brief a collection of expressions
+    struct kernel {
+        std::vector<expression> exps;
+
+        kernel(std::initializer_list<expression> exps) : exps(exps) {}
+    };
+
 }   // namespace math
 }   // namespace tall
 
@@ -149,10 +158,15 @@ int main()
    auto x = r.var();
    auto y = r.var();
    auto z = r.var();
+   auto sigma = r.var();
+   auto beta  = r.var();
+   auto rho   = r.var();
 
-   auto expr1 = x + y;
+   auto dx = sigma*(y-x);
+   auto dy = x*(rho-z)-y;
+   auto dz = x*y - beta*y;
 
-    return 0;
+   return 0;
 }
 
 #endif // TEST_MATH
