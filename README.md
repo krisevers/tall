@@ -19,11 +19,6 @@ int main(int argc, char** argv) {
     auto beta  = r.var();
     auto rho   = r.var();
 
-    auto dx = sigma*(y-x);
-    auto dy = x*(rho-z)-y;
-    auto dz = x*y - beta*y;
-    tall::kernel lorenz({dx, dy, dz});
-
     // assemble components from primitives
     auto vars  = r.assemble({x, y, z});
     auto pars = r.assemble({s, r, b});
