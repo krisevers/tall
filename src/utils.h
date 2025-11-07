@@ -5,8 +5,8 @@
 #include <cmath>
 #include <functional>
 
-#include "registry.h"
-#include "math.h"
+#include "tensor.h"
+#include "types.h"
 
 namespace tall {
 
@@ -29,26 +29,26 @@ namespace tall {
 
 
 
-    void print(const registry& r) {
-        printf("parent -> child : copies:\n");
-        for (std::size_t i = 0; i < r.capacity; ++i) {
-            for (std::size_t j = 0; j < r.capacity; ++j) {
-                if (r.relations[i, j] != 0) {
-                    // Print name if available, else index
-                    auto print_id = [&](std::size_t idx) {
-                        if (!r.names[idx].empty())
-                            printf("%s", r.names[idx].c_str());
-                        else
-                            printf("%zu", idx);
-                    };
-                    print_id(i);
-                    printf(" -> ");
-                    print_id(j);
-                    printf(" : %d\n", r.relations[i, j]);
-                }
-            }
-        }
-    }
+    // void print(const registry& r) {
+    //     printf("parent -> child : copies:\n");
+    //     for (std::size_t i = 0; i < r.capacity; ++i) {
+    //         for (std::size_t j = 0; j < r.capacity; ++j) {
+    //             if (r.relations[i, j] != 0) {
+    //                 // Print name if available, else index
+    //                 auto print_id = [&](std::size_t idx) {
+    //                     if (!r.names[idx].empty())
+    //                         printf("%s", r.names[idx].c_str());
+    //                     else
+    //                         printf("%zu", idx);
+    //                 };
+    //                 print_id(i);
+    //                 printf(" -> ");
+    //                 print_id(j);
+    //                 printf(" : %d\n", r.relations[i, j]);
+    //             }
+    //         }
+    //     }
+    // }
 
 
 }

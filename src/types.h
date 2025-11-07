@@ -14,14 +14,6 @@ namespace tall {
         SUCCESS,
     };
 
-    enum dtype {
-        INACTIVE,
-        VARIABLE,
-        PARAMETER,
-        COLLECTION,
-        SYSTEM,
-    };
-
     struct ID {
         std::size_t value;
 
@@ -42,18 +34,8 @@ namespace tall {
             }
 
         public:
-            friend struct registry; // the struct/class allowed to create IDs
-
+            friend struct Registry; // the struct/class allowed to create IDs
     };
-
-
-
-    // using primitive = std::variant<
-    //     int*,
-    //     float*,
-    //     double*,
-    //     bool*
-    // >;
 
 }
 

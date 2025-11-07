@@ -1,0 +1,17 @@
+[
+  {
+    "label": "compile",
+    "command": "/usr/bin/g++",
+    "args": ["-g", "$ZED_FILE", "-o", "$ZED_STEM"]
+  },
+
+  {
+    "label": "run",
+    "command": "./$ZED_STEM"
+  },
+
+  {
+    "label": "cleanup",
+    "command": "rm $ZED_STEM"
+  }
+]

@@ -1,0 +1,8 @@
+[
+  {
+    "adapter": "GDB",
+    "label": "uniqueID",
+    "request": "launch",
+    "program": "test/obj/05_uniqueID"
+  }
+]

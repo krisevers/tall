@@ -1,9 +1,13 @@
 #ifndef REGISTRY_H
 #define REGISTRY_H
 
+#include <initializer_list>
+
 #include "tensor.h"
-#include "math.h"
 #include "types.h"
+#include "expression.h"
+#include "primitives.h"
+#include "utils.h"
 
 namespace tall {
 
@@ -11,31 +15,21 @@ namespace tall {
     {
         std::size_t size;
         std::size_t capacity;
-        tall::tensor<dtype> versions;
+        tall::tensor<OPS> versions;
         tall::tensor<int> relations;
 
-        registry(std::size_t capacity) : capacity(capacity) {
-            size = 0;
-            versions  = tall::tensor<dtype>(capacity);
-            relations = tall::tensor<int>(capacity, capacity);
-        }
-        ~registry() {}
+        registry(std::size_t capacity);
+        ~registry();
 
-        ID add(dtype type) {
-            ID newid;
-            versions[newid] = type;
-            size++;
-            return newid;
-        }
+        ID add(OPS type);
 
-        bool has(ID id) {
-            return id < capacity && versions[id] != INACTIVE;
-        }
+        bool has(ID id);
 
-        math::expression var() {
-            ID id = add(VARIABLE);
-            return math::expression(id);
-        }
+        node var();
+        node par();
+
+        RESULT give(ID parent, ID child, int copies);
+        node assemble(std::initializer_list<node> components, std::size_t copies=1);
 
     };
 

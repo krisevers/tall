@@ -39,9 +39,9 @@ int main(int argc, char** argv) {
 
     // cach-friendly iterations
     tall::kernel lorenz({
-        sigma*(y-x),
-        x*(rho-z)-y,
-        x*y - beta*y,
+        dx = sigma*(y-x),
+        dy = x*(rho-z)-y,
+        dz = x*y - beta*y,
     });
 
     return 0;
