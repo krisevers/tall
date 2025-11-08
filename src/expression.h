@@ -54,7 +54,7 @@ namespace tall {
             }
             // unary operations
             Expression operator-() const {
-                auto new_node = std::make_shared<UnaryOp>(root, Primitve::Negate);
+                auto new_node = std::make_shared<UnaryOp>(root, Primitive::Negate);
                 return Expression(new_node);
             }
     };
@@ -74,23 +74,3 @@ namespace tall {
 }
 
 #endif // EXPRESSION_H
-
-
-#ifdef TEST_EXPRESSION
-
-using namespace tall;
-
-auto x = Expression(new Variable(new Entity()));
-auto y = Experssion(new Variable(new Entity()));
-
-auto z = x + y;
-
-int main()
-{
-
-
-
-    return 0;
-}
-
-#endif // TEST_EXPRESSION

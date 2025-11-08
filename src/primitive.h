@@ -31,21 +31,21 @@ namespace tall {
 
     // @brief represents a collection of variables or other collections.
     struct Collection : public Node {
-        Entity id;
+        const Entity id;
 
         explicit Collection(Entity id) : id(id) {}
     };
 
     // @brief represents a variable, holds data and is always a leaf node.
     struct Variable : public Node {
-        Entity id;
+        const Entity id;
 
         explicit Variable(Entity id) : id(id) {}
     };
 
     // @brief represents a parameter, holds data are not updatable.
     struct Parameter : public Node {
-        Entity id;
+        const Entity id;
 
         explicit Parameter(Entity id) : id(id) {}
     };
