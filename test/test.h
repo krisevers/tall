@@ -25,10 +25,7 @@ namespace test {
         std::vector<std::unique_ptr<Module>> modules;
         std::vector<std::pair<std::string, Fn>> functions;
 
-        std::string name;
-
         public:
-            Runner(std::string name) : name(name) {}
 
             template<typename M>
             Runner& push(M&& module) {
@@ -44,7 +41,7 @@ namespace test {
             }
 
             void run() {
-                tall::log::INFO(std::format("========= {} | test-suite =========", name));
+                tall::log::INFO(std::format("=================="));
                 tall::log::INFO(std::format("Running {} tests...", functions.size()));
                 auto start = std::chrono::steady_clock::now();
 
