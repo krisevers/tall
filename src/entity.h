@@ -12,20 +12,18 @@ namespace tall {
             return value;
         }
 
-        Entity(const std::size_t v) : value(v) {}
+        Entity() {
+            value = gen();
+        }
 
         private:
-            Entity() {
-                value = gen();
-            }
-
             static std::size_t gen() {
                 static std::atomic<std::size_t> uid{ 0 };
                 return uid++;
             }
 
         public:
-            friend struct Registry; // the struct/class allowed to create IDs
+            // friend struct Registry; // the struct/class allowed to create IDs (temporary public untill Registry is stable)
     };
 
 }

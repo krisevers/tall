@@ -6,12 +6,12 @@
 #include "tensor.h"
 #include "types.h"
 #include "expression.h"
-#include "primitives.h"
+#include "primitive.h"
 #include "utils.h"
 
 namespace tall {
 
-    struct registry
+    struct Registry
     {
         std::size_t size;
         std::size_t capacity;
@@ -21,15 +21,15 @@ namespace tall {
         registry(std::size_t capacity);
         ~registry();
 
-        ID add(OPS type);
+        Entity add(Operation type);
 
         bool has(ID id);
 
-        node var();
-        node par();
+        Node variable();
+        Node parameter();
 
-        RESULT give(ID parent, ID child, int copies);
-        node assemble(std::initializer_list<node> components, std::size_t copies=1);
+        Result give(Entity parent, Entity child, int copies);
+        Node assemble(std::initializer_list<Node> components, std::size_t copies=1);
 
     };
 

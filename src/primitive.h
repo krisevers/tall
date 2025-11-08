@@ -19,6 +19,7 @@ namespace tall {
         Exp,
         Sqrt,
         Pow,
+        Negate,
         Variable,       // for leaf nodes
         Parameter,      // for parameters
         Collection,     // for collections
@@ -39,7 +40,7 @@ namespace tall {
     struct Variable : public Node {
         Entity id;
 
-        explicit Variable(ID id) : id(id) {}
+        explicit Variable(Entity id) : id(id) {}
     };
 
     // @brief represents a parameter, holds data are not updatable.
@@ -55,7 +56,7 @@ namespace tall {
         NodePtr rhs;
         Primitive operation;
 
-        binary_op(NodePtr lhs, NodePtr rhs, Primitive op)
+        BinaryOp(NodePtr lhs, NodePtr rhs, Primitive op)
             : lhs(std::move(lhs)), rhs(std::move(rhs)), operation(op) {}
     };
 
@@ -64,7 +65,7 @@ namespace tall {
         NodePtr operand;
         Primitive operation;
 
-        unary_op(NodePtr op, Primitive operation)
+        UnaryOp(NodePtr op, Primitive operation)
             : operand(std::move(op)), operation(operation) {}
     };
 
@@ -91,10 +92,12 @@ namespace tall {
 
 #ifdef TEST_PRIMITIVE
 
-#include "registry.h"
-
+using namespace tall;
 int main()
 {
+
+    Variable x = Variable(new Entity());
+    Variable y = Variable(new Entity());
 
    return 0;
 }
