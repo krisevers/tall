@@ -9,27 +9,33 @@
 using namespace tall;
 
 struct ExpressionTest : public test::Module {
+    void build(test::Runner& runner) override {
 
-        void build(test::Runner& runner) override {
+        runner.unit("Create Expression", []() {
+            auto A = Expression(Entity());
+            auto B = Expression(Entity());
 
-            runner.unit("Create Expression", []() {
-                auto A = Expression(Entity());
-                auto B = Expression(Entity());
+            auto C = pow(A + B, 2) * A;
 
-                auto C = pow(A + B, 2) * A;
-
-
-                return test::Result::Ok;
-            });
-        }
+            return test::Result::Ok;
+        });
+    }
 };
 
+struct RegistryTest : public test::Module {
+    void build(test::Runner& runner) override {
+
+
+        return test::Result::Ok;
+    }
+}
 
 int main() {
 
     test::Runner runner;
 
     runner.push(ExpressionTest());
+    runner.push(RegistryTest());
 
     runner.run();
 }

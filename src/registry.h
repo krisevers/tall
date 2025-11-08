@@ -15,7 +15,7 @@ namespace tall {
     {
         std::size_t size;
         std::size_t capacity;
-        tall::tensor<OPS> versions;
+        tall::tensor<Operation> versions;
         tall::tensor<int> relations;
 
         registry(std::size_t capacity);
@@ -23,7 +23,7 @@ namespace tall {
 
         Entity add(Operation type);
 
-        bool has(ID id);
+        bool has(Entity id);
 
         Node variable();
         Node parameter();
